@@ -85,16 +85,10 @@ namespace Secure_Website.Areas.Identity.Pages.Account
 
             string email = info.Principal.Claims.ToList()[4].Value;
             var currentlylogginguser = await _userManager.FindByNameAsync(email);
-            if (currentlylogginguser == null)
-            {//return to login page
-                
-                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
-            }
-            else
-            {//the email already exists
-             //confirm the role ....is he/she a teacher??
+            if (currentlylogginguser != null)
+            {
 
-                //2. the email has a Teacher role associated with it
+                //the email has a Teacher role associated with it
                 //if any of the two conditions above fail >>> redirect to login page
 
                 bool confirmation = await _userManager.IsInRoleAsync(currentlylogginguser, "Teacher");
@@ -151,6 +145,8 @@ namespace Secure_Website.Areas.Identity.Pages.Account
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
 
                 var result = await _userManager.CreateAsync(user);
+                await _userManager.AddToRoleAsync(user, "Teacher");
+
                 if (result.Succeeded)
                 {
                     result = await _userManager.AddLoginAsync(user, info);
