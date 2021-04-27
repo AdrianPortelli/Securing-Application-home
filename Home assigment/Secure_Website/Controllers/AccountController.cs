@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
@@ -73,6 +75,29 @@ namespace Secure_Website.Controllers
             return password.ToString();
         }
 
+        private void sendMail(StudentModel model, string password)
+        {
+            using (MailMessage mm = new MailMessage("asecuring@gmail.com", model.Email))
+            {
+                mm.Subject = "Your Student Account Has been Created";
+                mm.Body = "Use you email as the username: "+model.Email+" and "+password;
+                mm.IsBodyHtml = false;
+
+                using (SmtpClient smtp = new SmtpClient())
+                {
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.EnableSsl = true;
+                    NetworkCredential NetworkCred = new NetworkCredential("asecuring@gmail.com", "!secur123APPS");
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Credentials = NetworkCred;
+                    smtp.Port = 587;
+                    smtp.Send(mm);
+                    ViewBag.Message = "Email sent.";
+                }
+            }
+        }
+
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -95,6 +120,7 @@ namespace Secure_Website.Controllers
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(student, "Student");
+                sendMail(model, password);
 
                 TempData["message"] = "Successfully Added Student";
                 return RedirectToAction("Index", "Home");
