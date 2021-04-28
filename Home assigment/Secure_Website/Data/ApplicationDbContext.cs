@@ -13,7 +13,19 @@ namespace Secure_Website.Data
             : base(options)
         {
         }
+        public DbSet<TaskModel> Task { get; set; }
 
-        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<TaskModel>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
+            //modelBuilder.Entity<Category>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
+
+        }
+
+     
+
+
     }
 }

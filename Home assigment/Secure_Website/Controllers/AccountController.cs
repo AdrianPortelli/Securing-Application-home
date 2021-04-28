@@ -116,7 +116,7 @@ namespace Secure_Website.Controllers
             var password = GeneratePassword();
             var result = await _userManager.CreateAsync(student, password);
            
-
+            
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(student, "Student");

@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20210428205240_Added-Task-Update.cs" />
+    <Compile Remove="Data\Migrations\20210428205240_Added-Task-Update.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210428205649_Added-Task-Update-2.cs" />
+    <Compile Remove="Data\Migrations\20210428205649_Added-Task-Update-2.Designer.cs" />
+    <Compile Remove="Migrations\20210428210730_Fixes.cs" />
+    <Compile Remove="Migrations\20210428210730_Fixes.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.12" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.13" />
