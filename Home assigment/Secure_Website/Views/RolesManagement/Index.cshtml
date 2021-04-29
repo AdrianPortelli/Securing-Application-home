@@ -4,6 +4,7 @@
 <h1>Index</h1>
 
 <form method="post" action="/RolesManagement/AllocateRole">
+    @Html.AntiForgeryToken()
     <table>
         <tr>
             <td>Roles:</td>
@@ -11,7 +12,8 @@
                 <select name="role">
                     @foreach (var role in Model.Roles)
                     {
-        <option value="@role.Name">@role.Name</option>}
+        <option value="@role.Name">@role.Name</option>
+}
                 </select>
             </td>
         </tr>
@@ -22,7 +24,8 @@
                     @foreach (var user in Model.Users)
                     {
                         var fullName = user.FirstName + " " + user.LastName + " " + user.Email;
-        <option value="@user.UserName">@fullName</option>}
+        <option value="@user.UserName">@fullName</option>
+}
                 </select>
             </td>
         </tr>

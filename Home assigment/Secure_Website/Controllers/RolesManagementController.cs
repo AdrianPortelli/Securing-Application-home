@@ -31,6 +31,7 @@ namespace Secure_Website.Controllers
             return View(model);
         }
 
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AllocateRole(string role, string user, string btnName)
         {
             var returnedUser = await _userManager.FindByNameAsync(user);

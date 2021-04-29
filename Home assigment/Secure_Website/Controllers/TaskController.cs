@@ -30,6 +30,7 @@ namespace Secure_Website.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> TaskCreation (ScheduleTaskModel model)
         {

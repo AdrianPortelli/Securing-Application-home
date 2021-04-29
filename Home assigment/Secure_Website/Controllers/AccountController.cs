@@ -106,6 +106,7 @@ namespace Secure_Website.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(StudentModel model)
         {
             var exists = _db.Users.SingleOrDefault(u => u.Email.Equals(model.Email));
