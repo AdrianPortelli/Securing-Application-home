@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Secure_Website.Data;
 
-namespace Secure_Website.Migrations
+namespace Secure_Website.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210429081847_ADDTask")]
+    partial class ADDTask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,7 +226,7 @@ namespace Secure_Website.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Secure_Website.Models.ScheduleTaskModel", b =>
+            modelBuilder.Entity("Secure_Website.Models.TaskModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -249,7 +251,7 @@ namespace Secure_Website.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ScheduleTask");
+                    b.ToTable("Task");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

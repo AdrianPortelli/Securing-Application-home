@@ -31,7 +31,7 @@ namespace Secure_Website.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Teacher")]
-        public async Task<IActionResult> TaskCreation (TaskModel model)
+        public async Task<IActionResult> TaskCreation (ScheduleTaskModel model)
         {
             int result = DateTime.Compare(model.Date, DateTime.Now.Date);
 
@@ -42,17 +42,18 @@ namespace Secure_Website.Controllers
             }
 
             var teacher = await _userManager.GetUserAsync(HttpContext.User);
-            var task = new TaskModel { Date = model.Date, Description = model.Description, TaskName = model.TaskName, TeacherId = teacher.Id };
+            var task = new ScheduleTaskModel { Date = model.Date, Description = model.Description, TaskName = model.TaskName, TeacherId = teacher.Id };
 
             _db.Add(task);
             await _db.SaveChangesAsync();
 
-            if (_db.Task.Find(task) != null)
+            /*if (_db.ScheduleTask.Find(task) != null)
             {
                 TempData["Success"] = "Successfully Added Task";
                 return View();
             }
-            TempData["Error"] = "Error Occured While Creating Task";
+            TempData["Error"] = "Error Occured While Creating Task";*/
+
             return View();
         }
     }

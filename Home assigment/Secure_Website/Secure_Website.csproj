@@ -11,6 +11,18 @@
     <Compile Remove="Data\Migrations\20210428205240_Added-Task-Update.Designer.cs" />
     <Compile Remove="Data\Migrations\20210428205649_Added-Task-Update-2.cs" />
     <Compile Remove="Data\Migrations\20210428205649_Added-Task-Update-2.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210429082642_RemovedTask.cs" />
+    <Compile Remove="Data\Migrations\20210429082642_RemovedTask.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210429082749_AddTaskFix.cs" />
+    <Compile Remove="Data\Migrations\20210429082749_AddTaskFix.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210429083228_Add.cs" />
+    <Compile Remove="Data\Migrations\20210429083228_Add.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210429083606_AddTaskV3.cs" />
+    <Compile Remove="Data\Migrations\20210429083606_AddTaskV3.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210429083853_ADDTEST.cs" />
+    <Compile Remove="Data\Migrations\20210429083853_ADDTEST.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210429085740_RemoveTest.cs" />
+    <Compile Remove="Data\Migrations\20210429085740_RemoveTest.Designer.cs" />
     <Compile Remove="Migrations\20210428210730_Fixes.cs" />
     <Compile Remove="Migrations\20210428210730_Fixes.Designer.cs" />
   </ItemGroup>
