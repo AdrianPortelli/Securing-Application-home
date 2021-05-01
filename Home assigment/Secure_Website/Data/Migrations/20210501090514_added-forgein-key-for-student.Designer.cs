@@ -10,8 +10,8 @@ using Secure_Website.Data;
 namespace Secure_Website.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210429090606_RemoveGUIDforOldTask")]
-    partial class RemoveGUIDforOldTask
+    [Migration("20210501090514_added-forgein-key-for-student")]
+    partial class addedforgeinkeyforstudent
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -252,6 +252,34 @@ namespace Secure_Website.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ScheduleTask");
+                });
+
+            modelBuilder.Entity("Secure_Website.Models.TaskModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("TaskName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("TeacherId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TaskModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

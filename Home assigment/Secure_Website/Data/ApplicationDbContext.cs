@@ -13,15 +13,16 @@ namespace Secure_Website.Data
             : base(options)
         {
         }
-       //public DbSet<TaskModel> TaskModel { get; set; }
+        //public DbSet<TaskModel> TaskModel { get; set; }
 
         public DbSet<ScheduleTaskModel> ScheduleTask { get; set; }
+        public DbSet<StudentModel> Student { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-           // modelBuilder.Entity<TaskModel>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
+            modelBuilder.Entity<TaskModel>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
             modelBuilder.Entity<ScheduleTaskModel>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
             //modelBuilder.Entity<Category>().Property(x => x.Id).HasDefaultValueSql("NEWID()");
 

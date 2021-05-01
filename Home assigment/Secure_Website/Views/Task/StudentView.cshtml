@@ -1,0 +1,31 @@
+﻿@model Secure_Website.Models.TaskViewModel
+@{ ViewData["Title"] = "StudentView"; }
+
+<h1>Your Tasks</h1>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Deadline</th>
+                <th scope="col">View</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in Model.ScheduleTasks)
+            { 
+                <tr>
+                    <td>@task.TaskName</td>
+                    <td>@task.Description</td>
+                    <td>@task.Date</td>
+                    <td>N/A</td>
+                </tr>
+             }
+        </tbody>
+    </table>
+</div>
+   
+  
+

@@ -23,6 +23,10 @@
     <Compile Remove="Data\Migrations\20210429083853_ADDTEST.Designer.cs" />
     <Compile Remove="Data\Migrations\20210429085740_RemoveTest.cs" />
     <Compile Remove="Data\Migrations\20210429085740_RemoveTest.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210501085329_added-foreign-key-to-student.cs" />
+    <Compile Remove="Data\Migrations\20210501085329_added-foreign-key-to-student.Designer.cs" />
+    <Compile Remove="Data\Migrations\20210501085509_added-foreign-key-to-student-v2.cs" />
+    <Compile Remove="Data\Migrations\20210501085509_added-foreign-key-to-student-v2.Designer.cs" />
     <Compile Remove="Migrations\20210428210730_Fixes.cs" />
     <Compile Remove="Migrations\20210428210730_Fixes.Designer.cs" />
   </ItemGroup>

@@ -114,6 +114,7 @@ namespace Secure_Website.Controllers
                 return View();
 
             var student = new ApplicationUser {UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName};
+            
             var password = GeneratePassword();
             var result = await _userManager.CreateAsync(student, password);
            
@@ -121,6 +122,13 @@ namespace Secure_Website.Controllers
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(student, "Student");
+
+                var teacher = await _userManager.GetUserAsync(HttpContext.User);
+                var studenetdb = new StudentModel { StudentId = student.Id, FirstName = student.FirstName, LastName = student.LastName, Email = student.Email, TeacherId  = teacher.Id};
+
+                _db.Add(studenetdb);
+                await _db.SaveChangesAsync();
+
                 sendMail(model, password);
 
                 TempData["message"] = "Successfully Added Student";

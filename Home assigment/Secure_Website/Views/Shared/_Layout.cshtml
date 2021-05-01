@@ -40,6 +40,13 @@
                          </li>
                          }
 
+                        @if (User.IsInRole("Student"))
+                        {
+                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Task" asp-action="StudentView">View Your Tasks</a>
+                         </li>
+                        }
+
                     </ul>
                 </div>
             </div>

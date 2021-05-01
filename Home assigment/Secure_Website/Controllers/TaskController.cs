@@ -22,6 +22,31 @@ namespace Secure_Website.Controllers
             
         }
 
+        [Authorize(Roles = "Student")]
+        public async Task<IActionResult> StudentView()
+        {
+
+            List<ScheduleTaskModel> taskList = new List<ScheduleTaskModel>();
+
+            var  loggedstudent = await _userManager.GetUserAsync(HttpContext.User);
+            StudentModel studentdb = _db.Student.Where(b => b.StudentId == loggedstudent.Id).FirstOrDefault();
+            taskList = _db.ScheduleTask.Where(b => b.TeacherId == studentdb.TeacherId).ToList();
+
+
+            TaskViewModel model = new TaskViewModel();
+            model.ScheduleTasks = taskList;
+            /*
+                 1. first get the student it
+                2. compare student id with the student table to get teacher id 
+                3. use teacher id to get the associated tasks
+                4. put tasks in model and return them
+             */
+
+            return View(model);
+        }
+
+
+
         [HttpGet]
         [Authorize(Roles = "Teacher")]
         public IActionResult TaskCreation()
