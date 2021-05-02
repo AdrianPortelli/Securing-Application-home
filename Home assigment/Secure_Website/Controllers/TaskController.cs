@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Secure_Website.Data;
@@ -35,14 +37,86 @@ namespace Secure_Website.Controllers
 
             TaskViewModel model = new TaskViewModel();
             model.ScheduleTasks = taskList;
-            /*
-                 1. first get the student it
-                2. compare student id with the student table to get teacher id 
-                3. use teacher id to get the associated tasks
-                4. put tasks in model and return them
-             */
 
             return View(model);
+        }
+
+
+        [HttpGet]
+        [Authorize(Roles = "Student")]
+        public IActionResult TaskSubmission()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Student")]
+        public IActionResult TaskSubmission(IFormFile file)
+        {
+
+            if (ModelState.IsValid)
+            {
+                string filename;
+
+                if(file == null)
+                {
+                    ModelState.AddModelError("file", "File is not valid and acceptable");
+                    return View();
+                }
+
+                if(Path.GetExtension(file.FileName) == ".pdf" )
+                {
+                    byte[] whitelist = new byte[] {37,80,68,70,45};
+
+                    if(file != null)
+                    {
+                        MemoryStream userFile = new MemoryStream();
+
+                        using(var f = file.OpenReadStream())
+                        {
+                            byte[] buffer = new byte[5];
+                            f.Read(buffer, 0, 5);
+
+                            for(int i = 0; i < whitelist.Length; i++)
+                            {
+                                if(whitelist[i] != buffer[i])
+                                {
+                                    ModelState.AddModelError("file", "File is not valid and acceptable");
+                                    return View();
+                                }
+                            }
+
+                            f.Position = 0;
+
+                            filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
+
+                            string absolutePath = @"StudentFiles\" + filename;
+
+                            try
+                            {
+                                using(FileStream fsOut = new FileStream(absolutePath, FileMode.CreateNew, FileAccess.Write))
+                                {
+                                    f.CopyTo(fsOut);
+                                }
+                                f.Close();
+                            }catch(Exception ex)
+                            {
+                                //logger
+                                //error page
+                                return View();
+                            }
+
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("file", "File is not valid and acceptable or size is greater than 10Mb");
+                    return View();
+                }
+            }
+            return View();
         }
 
 
