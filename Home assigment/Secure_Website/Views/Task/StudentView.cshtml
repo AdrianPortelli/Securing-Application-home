@@ -20,8 +20,12 @@
                     <td>@task.TaskName</td>
                     <td>@task.Description</td>
                     <td>@task.Date</td>
-                    <td>N/A</td>
-                </tr>
+                    <td>
+                        <form asp-controller="Task" asp-action="Redirect" method="Post">
+                            <button type="submit">Click for submission</button>
+                        </form>
+                    </td>
+                 </tr>
              }
         </tbody>
     </table>

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Secure_Website.Data;
 using Secure_Website.Models;
 
@@ -23,13 +24,15 @@ namespace Secure_Website.Controllers
         private ApplicationDbContext _db;
         RoleManager<IdentityRole> _roleManager;
         private UserManager<ApplicationUser> _userManager;
+        private readonly ILogger<AccountController> _logger;
 
 
-        public AccountController(ApplicationDbContext db, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+        public AccountController(ApplicationDbContext db, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, ILogger<AccountController> logger)
         {
             _db = db;
             _roleManager = roleManager;
             _userManager = userManager;
+            _logger = logger;
         }
 
         //[HttpGet]
@@ -99,8 +102,11 @@ namespace Secure_Website.Controllers
 
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            _logger.LogInformation(user.FirstName + " " + user.LastName + "has accessed register");
             return View();
         }
 
@@ -135,8 +141,8 @@ namespace Secure_Website.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            TempData["message"] = "Failed to added Student";
-            return View();
+            _logger.LogError("Error while adding student");
+            return View("Error", new ErrorViewModel() { Message = "Error while adding student" });
         }
     }
 }

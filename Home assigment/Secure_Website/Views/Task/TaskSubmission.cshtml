@@ -1,11 +1,13 @@
-﻿
+﻿@model Secure_Website.Models.ScheduleTaskModel
+
 @{
     ViewData["Title"] = "TaskSubmission";
 }
 
 <h1>TaskSubmission</h1>
 
-
+<h3>@Model.TaskName</h3>
+<h5>@Model.Description</h5>
 <form asp-controller="Task" asp-action="TaskSubmission" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
 
