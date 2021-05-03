@@ -21,6 +21,7 @@ namespace Secure_Website.Controllers
     [Authorize(Roles = "Teacher")]
     public class AccountController : Controller
     {
+
         private ApplicationDbContext _db;
         RoleManager<IdentityRole> _roleManager;
         private UserManager<ApplicationUser> _userManager;
