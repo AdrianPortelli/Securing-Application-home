@@ -21,7 +21,7 @@
                     <td>@task.Description</td>
                     <td>@task.Date</td>
                     <td>
-                        <form asp-controller="Task" asp-action="Redirect" method="Post">
+                        <form asp-controller="Task" asp-action="TaskSubmission" asp-route-id="@task.Id" method="get">
                             <button type="submit">Click for submission</button>
                         </form>
                     </td>

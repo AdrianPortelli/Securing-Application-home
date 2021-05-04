@@ -46,20 +46,16 @@ namespace Secure_Website.Controllers
             return View(model);
         }
 
-    
 
-        public IActionResult Redirect(ScheduleTaskModel model)
-        {
-            return RedirectToAction("TaskSubmission",model);
-        }
-
-        [HttpGet]
         [Authorize(Roles = "Student")]
-        public async Task<IActionResult> TaskSubmission(ScheduleTaskModel model)
+        [HttpGet]
+        public async Task<IActionResult> TaskSubmission(Guid id)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            _logger.LogInformation(user.FirstName+" "+user.LastName+"has accessed TaskSubmission");
+            _logger.LogInformation(user.FirstName+" "+user.LastName+" has accessed TaskSubmission");
 
+
+            ScheduleTaskModel model = _db.ScheduleTask.Where(b => b.Id == id).FirstOrDefault();
             return View(model);
         }
 
@@ -75,8 +71,8 @@ namespace Secure_Website.Controllers
 
                 if(file == null)
                 {
-                    ModelState.AddModelError("file", "File is not valid and acceptable");
-                    return View();
+                    _logger.LogError("No file was added");
+                    return View("Error", new ErrorViewModel() { Message = "No file was added" });
                 }
 
                 if(Path.GetExtension(file.FileName) == ".pdf" )
@@ -96,8 +92,8 @@ namespace Secure_Website.Controllers
                             {
                                 if(whitelist[i] != buffer[i])
                                 {
-                                    ModelState.AddModelError("file", "File is not valid and acceptable");
-                                    return View();
+                                    _logger.LogError("File does not match file signature");
+                                    return View("Error", new ErrorViewModel() { Message = "Error while saving the file. Try again" });
                                 }
                             }
 
@@ -116,10 +112,8 @@ namespace Secure_Website.Controllers
                                 f.Close();
                             }catch(Exception ex)
                             {
-                                //logger
-                                //error page
                                 _logger.LogError(ex, "Error happend while saving file");
-                                return View("Error", new ErrorViewModel() { Message = "Error while saving the file. Try again later" });
+                                return View("Error", new ErrorViewModel() { Message = "Error while saving the file. Try again" });
                             }
 
                         }
